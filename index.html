@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เกมทดสอบขบวนรถไฟ (แบ่งพาส)</title>
-    <!-- เพิ่มฟอนต์ภาษาไทยจาก Google Fonts -->
+    <title>เกมทดสอบขบวนรถไฟ (ฉบับสมบูรณ์)</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
@@ -21,149 +20,39 @@
             box-sizing: border-box;
         }
 
-        /* (ใหม่) คอนเทนเนอร์หลักที่สลับหน้าจอ */
         #app-container {
             width: 100%;
             max-width: 600px;
         }
         
-        /* (ใหม่) สไตล์หน้าเมนู */
-        #menu-container {
+        /* --- หน้าจอต่างๆ --- */
+        #menu-container, #game-container, #part-score-container {
             background-color: #ffffff;
             border-radius: 12px;
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
             padding: 25px;
             text-align: center;
+            box-sizing: border-box;
+            display: none; /* ซ่อนโดย Default */
         }
         
-        #menu-container h1 {
-            color: #1a3a66;
-            margin-bottom: 25px;
-        }
+        h1, h2 { color: #1a3a66; margin-bottom: 20px; }
+        h1 { font-size: 1.8rem; }
+        h2 { font-size: 1.6rem; margin-top: 0; }
 
+        /* --- เมนูเลือกพาส --- */
         #part-selection-container {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
         
-        /* (ใหม่) สไตล์ปุ่มเลือกพาส (ใช้สไตล์ .action-btn ร่วม) */
-        .part-button {
-            background-color: #007bff;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        .part-button:hover {
-            background-color: #0056b3;
-        }
-
-        /* (แก้ไข) หน้าเกม (ซ่อนไว้ตอนเริ่ม) */
-        #game-container {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-            padding: 25px;
-            text-align: center;
-            box-sizing: border-box;
-            display: none; /* ซ่อนตอนเริ่มต้น */
-        }
-        
-        /* (ใหม่) หน้าสรุปคะแนน (ซ่อนไว้ตอนเริ่ม) */
-        #part-score-container {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-            padding: 25px 30px;
-            text-align: center;
-            display: none; /* ซ่อนตอนเริ่มต้น */
-        }
-        
-        #part-score-container h2 {
-            color: #1a3a66;
-            margin-top: 0;
-            margin-bottom: 15px;
-        }
-        
-        #part-score-display {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #28a745;
-            margin-bottom: 25px;
-        }
-        
-        #back-to-menu-button {
-            background-color: #6c757d;
-        }
-        #back-to-menu-button:hover {
-             background-color: #5a6268;
-        }
-
-        /* (ใหม่) สไตล์สำหรับปุ่มรีวิว */
-        #review-button {
-            background-color: #f0ad4e; /* สีส้ม */
-            margin-top: 10px; /* เว้นระยะจากปุ่มกลับ */
-            display: none; /* ซ่อนไว้ก่อน */
-        }
-        #review-button:hover {
-            background-color: #ec971f;
-        }
-
-        /* (ใหม่) สไตล์สำหรับส่วนรีวิว */
-        #review-container {
-            margin-top: 20px;
-            text-align: left;
-            border-top: 2px solid #eee;
-            padding-top: 15px;
-            display: none; /* ซ่อนไว้ก่อน */
-        }
-        .review-item {
-            border-bottom: 1px solid #f0f0f0;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-        }
-        .review-item h4 {
-            margin: 0 0 5px 0;
-            color: #333;
-        }
-        .review-question {
-            font-style: italic;
-            color: #555;
-            font-size: 0.95rem;
-            padding-left: 10px;
-        }
-        .review-answer p {
-            margin: 5px 0 5px 10px;
-            font-size: 1rem;
-        }
-        .review-wrong {
-            color: #dc3545;
-            font-weight: bold;
-            background-color: #fff0f0;
-            padding: 2px 5px;
-            border-radius: 4px;
-        }
-        .review-correct {
-            color: #28a745;
-            font-weight: bold;
-            background-color: #f0fff4;
-            padding: 2px 5px;
-            border-radius: 4px;
-        }
-
-
-        /* --- สไตล์อื่นๆ (เหมือนเดิม) --- */
-        h1 {
-            color: #1a3a66;
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-
+        /* --- ส่วนของเกม --- */
         #score-counter {
             font-size: 1rem;
             color: #555;
             margin-bottom: 20px;
             font-weight: 600;
-            min-height: 20px;
         }
 
         #question-container {
@@ -182,11 +71,7 @@
             line-height: 1.5;
             color: #333;
         }
-        
-        .question-line span {
-            font-weight: bold;
-            color: #0056b3;
-        }
+        .question-line span { font-weight: bold; color: #0056b3; }
         
         #answer-container {
             display: flex;
@@ -202,7 +87,6 @@
             align-items: flex-start;
             width: 100%;
         }
-        
         .answer-group label {
             font-size: 1rem;
             font-weight: 600;
@@ -221,23 +105,9 @@
             box-sizing: border-box;
             transition: border-color 0.3s ease;
         }
-        
-        .answer-input:focus {
-            border-color: #007bff;
-            outline: none;
-        }
-        
-        .answer-input.correct {
-            border-color: #28a745;
-            background-color: #f0fff4;
-            color: #28a745;
-        }
-        
-        .answer-input.incorrect {
-            border-color: #dc3545;
-            background-color: #fff0f0;
-            color: #dc3545;
-        }
+        .answer-input:focus { border-color: #007bff; outline: none; }
+        .answer-input.correct { border-color: #28a745; background-color: #f0fff4; color: #28a745; }
+        .answer-input.incorrect { border-color: #dc3545; background-color: #fff0f0; color: #dc3545; }
 
         #feedback {
             font-size: 1.15rem;
@@ -248,6 +118,7 @@
             word-wrap: break-word;
         }
 
+        /* --- ปุ่มควบคุม --- */
         #action-button-container {
             display: flex;
             flex-wrap: wrap;
@@ -269,6 +140,9 @@
             min-width: 120px;
             box-sizing: border-box;
         }
+        
+        .part-button { background-color: #007bff; width: 100%; }
+        .part-button:hover { background-color: #0056b3; }
 
         #submit-button { background-color: #007bff; }
         #submit-button:hover { background-color: #0056b3; }
@@ -276,36 +150,76 @@
         #hint-button:hover { background-color: #ec971f; }
         #navigation-button { background-color: #6c757d; }
         #navigation-button:hover { background-color: #5a6268; }
+        
+        #back-to-menu-button { background-color: #6c757d; width: 100%; margin-bottom: 10px;}
+        #review-button { background-color: #17a2b8; width: 100%; margin-bottom: 10px; display: none;}
+        #export-pdf-button { background-color: #28a745; width: 100%; margin-bottom: 10px;}
+
+        /* --- ส่วนรีวิว --- */
+        #review-container {
+            margin-top: 20px;
+            text-align: left;
+            border-top: 2px solid #eee;
+            padding-top: 15px;
+            display: none;
+        }
+        .review-item {
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .review-wrong { color: #dc3545; font-weight: bold; }
+        .review-correct { color: #28a745; font-weight: bold; }
+
+        /* --- ส่วนสำหรับพิมพ์ (Print Area) --- */
+        #print-container {
+            display: none;
+            font-family: 'Sarabun', sans-serif;
+            padding: 20px;
+            background: white;
+        }
+        
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .report-table th, .report-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .report-table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+        .status-correct { color: green; font-weight: bold; }
+        .status-wrong { color: red; font-weight: bold; }
+
+        @media print {
+            body { background-color: white; display: block; padding: 0; }
+            #app-container { display: none !important; }
+            #print-container { display: block !important; }
+            @page { margin: 2cm; }
+        }
 
         @media (max-width: 480px) {
-            h1, #part-score-container h2 { font-size: 1.6rem; }
-            .question-line { font-size: 1rem; }
-            .answer-input { font-size: 1rem; }
-            .action-btn {
-                font-size: 0.9rem;
-                width: 100%;
-                flex-grow: 0;
-            }
+            h1, h2 { font-size: 1.6rem; }
+            .action-btn { font-size: 0.9rem; width: 100%; flex-grow: 0; }
             #action-button-container { flex-direction: column; }
-            .part-button { width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- (ใหม่) คอนเทนเนอร์หลัก -->
     <div id="app-container">
-
-        <!-- (ใหม่) หน้าเมนู -->
         <div id="menu-container">
             <h1>เลือกชุดข้อสอบ</h1>
-            <p style="color: #666; margin-bottom: 20px;">(ข้อสอบถูกคละสายรถไฟในทุกชุด)</p>
-            <div id="part-selection-container">
-                <!-- ปุ่มเลือกพาสจะถูกสร้างโดย JS -->
-            </div>
+            <p style="color: #666; margin-bottom: 20px;">(ขอให้ทุกท่านโชคดีกับการทำข้อสอบครับ)</p>
+            <div id="part-selection-container"></div>
         </div>
 
-        <!-- (แก้ไข) หน้าเกม (ย้ายเข้ามา) -->
         <div id="game-container">
             <h1>เกมทดสอบขบวนรถไฟ</h1>
             <div id="score-counter">กำลังโหลด...</div>
@@ -319,25 +233,29 @@
             </div>
         </div>
         
-        <!-- (ใหม่) หน้าสรุปคะแนน -->
         <div id="part-score-container">
             <h2>สรุปคะแนน (ชุดนี้)</h2>
-            <div id="part-score-display">คุณทำได้ 0 / 0 คะแนน</div>
+            <div id="part-score-display" style="font-size: 1.5rem; font-weight: bold; color: #28a745; margin-bottom: 20px;">
+                คุณทำได้ 0 / 0 คะแนน
+            </div>
+            
+            <button id="export-pdf-button" class="action-btn">บันทึกเป็น PDF (พิมพ์รายงาน)</button>
+            <button id="review-button" class="action-btn">ดูข้อที่ผิดในหน้าจอนี้</button>
             <button id="back-to-menu-button" class="action-btn">กลับไปหน้าหลัก</button>
             
-            <!-- (ใหม่) ปุ่มและพื้นที่สำหรับรีวิวข้อที่ผิด -->
-            <button id="review-button" class="action-btn">ดูข้อที่ผิด</button>
-            <div id="review-container">
-                <!-- เนื้อหารีวิวจะถูกสร้างโดย JS -->
-            </div>
+            <div id="review-container"></div>
         </div>
+    </div> 
 
-    </div> <!-- จบ #app-container -->
+    <div id="print-container">
+        <h2 id="print-title" style="text-align: center;">รายงานผลการทดสอบ</h2>
+        <p id="print-score" style="text-align: center; font-size: 1.2rem;"></p>
+        <div id="print-content"></div>
+        <p style="text-align: center; margin-top: 30px; font-size: 0.8rem; color: #555;">สร้างโดย: เกมทดสอบขบวนรถไฟ</p>
+    </div>
 
-
-    <!-- --- JavaScript Logic --- -->
     <script>
-        // --- ข้อมูลรถไฟทั้งหมด (177 ข้อ) ---
+        // --- ข้อมูลรถไฟ 177 ข้อ ---
         const trainData = [
             { route: "กรุงเทพอภิวัฒน์ - ชุมทางหาดใหญ่", number: "31 CNR", type: "ด่วนพิเศษ" },
             { route: "ชุมทางหาดใหญ่ - กรุงเทพอภิวัฒน์", number: "32 CNR", type: "ด่วนพิเศษ" },
@@ -551,94 +469,55 @@
             { route: "บ้านแหลม - แม่กลอง", number: "4387", type: "ชานเมือง" }
         ];
 
-        // --- (ใหม่) ตรรกะของเกมที่แบ่งพาส ---
-        
-        // (ใหม่) ค่าคงที่สำหรับแบ่งพาส
-        const QUESTIONS_PER_PART = 25;
-
-        // (ใหม่) ตัวแปรสำหรับเก็บคำถามเฉพาะพาสนี้
+        // --- ตรรกะของเกม ---
+        const QUESTIONS_PER_PART = 20;
         let currentPartQuestions = [];
-        let allQuestionsShuffled = []; // (ใหม่) เก็บข้อมูลทั้งหมดที่สลับแล้ว
-        
+        let allQuestionsShuffled = [];
         let currentQuestionIndex = 0;
-        let currentTemplate = 0; // 0:FindNum, 1:FindType, 2:FindRoute
+        let currentTemplate = 0; 
         let score = 0;
         let answered = false;
-        let allQuestionsAnswered = false; // (แก้ไข) ใช้สำหรับเช็คว่าจบ "พาส" นี้หรือยัง
-        let incorrectAnswersForReview = []; // (ใหม่) สำหรับเก็บข้อที่ผิด
+        let answersLog = [];
+        let currentPartIndexForPrint = 0; 
 
-        // (ใหม่) ดึง Element ของหน้าจอต่างๆ
+        // Element Reference
         let menuContainer, gameContainer, partScoreContainer, partSelectionContainer,
             partScoreDisplay, backToMenuButton, reviewButton, reviewContainer,
             questionContainer, answerContainer, feedbackEl, scoreCounterEl,
-            submitButton, hintButton, navButton;
+            submitButton, hintButton, navButton, exportPdfButton;
             
-        let appInitialized = false; // (ใหม่) Flag to prevent double init
+        let appInitialized = false; 
 
-        // (ใหม่) Function สลับหน้าจอ
         function showView(viewName) {
-            if (!menuContainer || !gameContainer || !partScoreContainer) {
-                console.error("showView called before elements are initialized");
-                return;
-            }
+            if (!menuContainer) return;
             menuContainer.style.display = 'none';
             gameContainer.style.display = 'none';
             partScoreContainer.style.display = 'none';
 
-            if (viewName === 'menu') {
-                menuContainer.style.display = 'block';
-            } else if (viewName === 'game') {
-                gameContainer.style.display = 'block';
-            } else if (viewName === 'score') {
-                partScoreContainer.style.display = 'block';
-            }
+            if (viewName === 'menu') menuContainer.style.display = 'block';
+            else if (viewName === 'game') gameContainer.style.display = 'block';
+            else if (viewName === 'score') partScoreContainer.style.display = 'block';
         }
 
-        // Function สับเปลี่ยนอาร์เรย์
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [array[i], array[j]] = [array[j], array[i]];
             }
         }
+        function normalizeText(str) { return (str || '').trim().toUpperCase().replace(/\s/g, '').replace(/\(.*\)/g, ''); }
+        function normalizeNumber(str) { return (str || '').trim().toUpperCase().replace(/\s/g, ''); }
+        function createInput(id, label) { return `<div class="answer-group"><label for="input-${id}">${label}:</label><input type="text" id="input-${id}" class="answer-input" placeholder="เติมคำตอบ..."></div>`; }
+        function createQuestionLine(label, value) { return `<div class="question-line">${label}: <span>${value}</span></div>`; }
 
-        // Functions สำหรับเทียบคำตอบ (เหมือนเดิม)
-        function normalizeText(str) {
-            if (typeof str !== 'string') return '';
-            return str.trim().toUpperCase()
-                      .replace(/\s/g, '') 
-                      .replace(/\(.*\)/g, '');
-        }
-        function normalizeNumber(str) {
-            if (typeof str !== 'string') return '';
-            return str.trim().toUpperCase().replace(/\s/g, ''); 
-        }
-
-        // Function สร้าง HTML (เหมือนเดิม)
-        function createInput(id, label) {
-            return `
-                <div class="answer-group">
-                    <label for="input-${id}">${label}:</label>
-                    <input type="text" id="input-${id}" class="answer-input" placeholder="เติมคำตอบ...">
-                </div>
-            `;
-        }
-        function createQuestionLine(label, value) {
-            return `<div class="question-line">${label}: <span>${value}</span></div>`;
-        }
-        
-        // (แก้ไข) Function อัปเดตตัวนับ (ใช้ currentPartQuestions)
         function updateCounters() {
             const remaining = currentPartQuestions.filter(q => q.status === 'unanswered').length;
             const totalInPart = currentPartQuestions.length;
             scoreCounterEl.textContent = `ข้อที่: ${currentQuestionIndex + 1}/${totalInPart} | คะแนน: ${score} | เหลือ: ${remaining}`;
         }
 
-        // (แก้ไข) Function แสดงคำถาม (ใช้ currentPartQuestions)
         function displayQuestion() {
             answered = false;
-            allQuestionsAnswered = false;
-            
             currentTemplate = Math.floor(Math.random() * 3); 
             const q = currentPartQuestions[currentQuestionIndex];
             
@@ -647,18 +526,9 @@
             feedbackEl.textContent = '';
             
             switch (currentTemplate) {
-                case 0: // โจทย์: เส้นทาง + ประเภท -> ตอบ: หมายเลข
-                    questionContainer.innerHTML = createQuestionLine('เส้นทาง', q.route) + createQuestionLine('ประเภท', q.type);
-                    answerContainer.innerHTML = createInput('number', 'หมายเลขขบวนคือ');
-                    break;
-                case 1: // โจทย์: หมายเลข + เส้นทาง -> ตอบ: ประเภท
-                    questionContainer.innerHTML = createQuestionLine('หมายเลข', q.number) + createQuestionLine('เส้นทาง', q.route);
-                    answerContainer.innerHTML = createInput('type', 'ประเภทรถคือ');
-                    break;
-                case 2: // โจทย์: หมายเลข + ประเภท -> ตอบ: เส้นทาง
-                    questionContainer.innerHTML = createQuestionLine('หมายเลข', q.number) + createQuestionLine('ประเภท', q.type);
-                    answerContainer.innerHTML = createInput('route', 'เส้นทางคือ (ต้นทาง - ปลายทาง)');
-                    break;
+                case 0: questionContainer.innerHTML = createQuestionLine('เส้นทาง', q.route) + createQuestionLine('ประเภท', q.type); answerContainer.innerHTML = createInput('number', 'หมายเลขขบวนคือ'); break;
+                case 1: questionContainer.innerHTML = createQuestionLine('หมายเลข', q.number) + createQuestionLine('เส้นทาง', q.route); answerContainer.innerHTML = createInput('type', 'ประเภทรถคือ'); break;
+                case 2: questionContainer.innerHTML = createQuestionLine('หมายเลข', q.number) + createQuestionLine('ประเภท', q.type); answerContainer.innerHTML = createInput('route', 'เส้นทางคือ (ต้นทาง - ปลายทาง)'); break;
             }
 
             submitButton.style.display = 'inline-block';
@@ -667,78 +537,70 @@
             navButton.textContent = 'ข้าม';
             
             updateCounters();
-            
-            // (ย้าย) ย้าย listener มาที่นี่
             document.querySelectorAll('.answer-input').forEach(input => {
-                input.onkeyup = function(event) {
-                    if (event.key === 'Enter' && !answered) {
-                        checkAnswer();
-                    }
-                }; 
+                input.onkeyup = function(event) { if (event.key === 'Enter' && !answered) checkAnswer(); };
             });
         }
         
-        // (แก้ไข) Function ตรวจคำตอบ (ใช้ currentPartQuestions)
+        function logAnswer(q, template, userAnsObj, correctAnsArr, isCorrect, isSkipped) {
+            let questionText = "";
+            let correctText = correctAnsArr.join(" / ");
+            let userText = "";
+
+            if (template === 0) questionText = `เส้นทาง: ${q.route}, ประเภท: ${q.type}`;
+            else if (template === 1) questionText = `หมายเลข: ${q.number}, เส้นทาง: ${q.route}`;
+            else if (template === 2) questionText = `หมายเลข: ${q.number}, ประเภท: ${q.type}`;
+
+            if (isSkipped) userText = "(ดูเฉลย)";
+            else {
+                if (template === 0) userText = userAnsObj.number;
+                else if (template === 1) userText = userAnsObj.type;
+                else if (template === 2) userText = userAnsObj.route;
+            }
+            if (!userText) userText = "(ว่าง)";
+
+            answersLog.push({
+                no: currentQuestionIndex + 1,
+                question: questionText,
+                userAnswer: userText,
+                correctAnswer: correctText,
+                isCorrect: isCorrect
+            });
+        }
+
         function checkAnswer() {
             if (answered) return;
-            
             const q = currentPartQuestions[currentQuestionIndex];
             let isFullyCorrect = true; 
             let correctAnswersForHint = []; 
+            let userAnswers = {}; 
 
             if (currentTemplate === 0) { 
-                const inputEl = document.getElementById('input-number');
-                const userInputNorm = normalizeNumber(inputEl.value); 
+                const val = document.getElementById('input-number').value; userAnswers.number = val;
+                const userInputNorm = normalizeNumber(val); 
+                const allMatches = trainData.filter(item => normalizeText(item.route) === normalizeText(q.route) && normalizeText(item.type) === normalizeText(q.type));
+                correctAnswersForHint = allMatches.map(item => item.number); 
+                const acceptableNumbersNorm = [...new Set(correctAnswersForHint.flatMap(n => [normalizeNumber(n), normalizeNumber(n.replace('CNR', ''))]))];
                 
-                const normRoute = normalizeText(q.route);
-                const normType = normalizeText(q.type);
-                const allMatches = trainData.filter(item => 
-                    normalizeText(item.route) === normRoute && 
-                    normalizeText(item.type) === normType
-                );
-                
-                const acceptableNumbers = allMatches.map(item => item.number);
-                correctAnswersForHint = acceptableNumbers; 
-                
-                const acceptableNumbersNorm = [...new Set(
-                    acceptableNumbers.flatMap(n => [normalizeNumber(n), normalizeNumber(n.replace('CNR', ''))])
-                )];
-                
-                if (acceptableNumbersNorm.includes(userInputNorm) && userInputNorm !== "") {
-                    inputEl.classList.add('correct');
-                } else {
-                    inputEl.classList.add('incorrect');
-                    isFullyCorrect = false;
-                }
-                inputEl.disabled = true;
+                if (acceptableNumbersNorm.includes(userInputNorm) && userInputNorm !== "") document.getElementById('input-number').classList.add('correct');
+                else { document.getElementById('input-number').classList.add('incorrect'); isFullyCorrect = false; }
+                document.getElementById('input-number').disabled = true;
 
             } else if (currentTemplate === 1) { 
-                const inputEl = document.getElementById('input-type');
-                const userInputNorm = normalizeText(inputEl.value); 
-                const correctNorm = normalizeText(q.type);
+                const val = document.getElementById('input-type').value; userAnswers.type = val;
+                const userInputNorm = normalizeText(val); 
                 correctAnswersForHint.push(q.type); 
-
-                if (userInputNorm === correctNorm && userInputNorm !== "") {
-                    inputEl.classList.add('correct');
-                } else {
-                    inputEl.classList.add('incorrect');
-                    isFullyCorrect = false;
-                }
-                inputEl.disabled = true;
+                if (userInputNorm === normalizeText(q.type) && userInputNorm !== "") document.getElementById('input-type').classList.add('correct');
+                else { document.getElementById('input-type').classList.add('incorrect'); isFullyCorrect = false; }
+                document.getElementById('input-type').disabled = true;
 
             } else if (currentTemplate === 2) { 
-                const inputEl = document.getElementById('input-route');
-                const userInputNorm = normalizeText(inputEl.value); 
-                const correctNorm = normalizeText(q.route);
+                const val = document.getElementById('input-route').value; userAnswers.route = val;
+                const userInputNorm = normalizeText(val); 
                 correctAnswersForHint.push(q.route); 
-
-                if (userInputNorm === correctNorm && userInputNorm !== "") {
-                    inputEl.classList.add('correct');
-                } else {
-                    inputEl.classList.add('incorrect');
-                    isFullyCorrect = false;
-                }
-                inputEl.disabled = true;
+                if (userInputNorm === normalizeText(q.route) && userInputNorm !== "") document.getElementById('input-route').classList.add('correct');
+                else { document.getElementById('input-route').classList.add('incorrect'); isFullyCorrect = false; }
+                document.getElementById('input-route').disabled = true;
             }
 
             answered = true;
@@ -746,70 +608,41 @@
             hintButton.style.display = 'none';
             navButton.textContent = 'ข้อถัดไป';
 
+            logAnswer(q, currentTemplate, userAnswers, correctAnswersForHint, isFullyCorrect, false);
+
             if (isFullyCorrect) {
-                feedbackEl.textContent = 'ถูกต้อง!';
-                feedbackEl.style.color = '#28a745';
-                if (currentPartQuestions[currentQuestionIndex].status === 'unanswered') {
-                    score++;
-                }
+                feedbackEl.textContent = 'ถูกต้อง!'; feedbackEl.style.color = '#28a745';
+                if (currentPartQuestions[currentQuestionIndex].status === 'unanswered') score++;
                 currentPartQuestions[currentQuestionIndex].status = 'correct';
             } else {
-                feedbackEl.textContent = `ผิด! คำตอบคือ: ${correctAnswersForHint.join(' / ')}`;
-                feedbackEl.style.color = '#dc3545';
+                feedbackEl.textContent = `ผิด! คำตอบคือ: ${correctAnswersForHint.join(' / ')}`; feedbackEl.style.color = '#dc3545';
                 currentPartQuestions[currentQuestionIndex].status = 'incorrect';
-                
-                // (ใหม่) เก็บข้อมูลข้อที่ผิด
-                saveIncorrectAnswer(q, correctAnswersForHint);
-                
-                showAnswer(true, correctAnswersForHint);
+                showAnswerInputFill(correctAnswersForHint);
             }
-            
             updateCounters();
         }
         
-        // (แก้ไข) Function ดูเฉลย (ใช้ currentPartQuestions)
         function showAnswer(onlyIncorrect = false, correctAnswers = []) {
             if (answered && !onlyIncorrect) return;
-            
             const q = currentPartQuestions[currentQuestionIndex];
             
             if (correctAnswers.length === 0) {
                  if (currentTemplate === 0) {
-                    const normRoute = normalizeText(q.route);
-                    const normType = normalizeText(q.type);
-                    const allMatches = trainData.filter(item => normalizeText(item.route) === normRoute && normalizeText(item.type) === normType);
+                    const allMatches = trainData.filter(item => normalizeText(item.route) === normalizeText(q.route) && normalizeText(item.type) === normalizeText(q.type));
                     correctAnswers = allMatches.map(item => item.number);
-                 } else if (currentTemplate === 1) {
-                    correctAnswers = [q.type];
-                 } else if (currentTemplate === 2) {
-                    correctAnswers = [q.route];
-                 }
+                 } else if (currentTemplate === 1) correctAnswers = [q.type];
+                 else if (currentTemplate === 2) correctAnswers = [q.route];
             }
             
-            const answerString = correctAnswers.join(' / ');
-
-            if (currentTemplate === 0) {
-                const el = document.getElementById('input-number');
-                if (!onlyIncorrect || el.classList.contains('incorrect')) { el.value = answerString; el.classList.add('correct'); el.classList.remove('incorrect'); }
-                el.disabled = true;
-            } else if (currentTemplate === 1) {
-                const el = document.getElementById('input-type');
-                if (!onlyIncorrect || el.classList.contains('incorrect')) { el.value = answerString; el.classList.add('correct'); el.classList.remove('incorrect'); }
-                el.disabled = true;
-            } else if (currentTemplate === 2) {
-                const el = document.getElementById('input-route');
-                if (!onlyIncorrect || el.classList.contains('incorrect')) { el.value = answerString; el.classList.add('correct'); el.classList.remove('incorrect'); }
-                el.disabled = true;
-            }
+            showAnswerInputFill(correctAnswers);
             
             if (!onlyIncorrect) { 
                 answered = true;
-                feedbackEl.textContent = `เฉลยคือ: ${answerString}`;
+                feedbackEl.textContent = `เฉลยคือ: ${correctAnswers.join(' / ')}`;
                 feedbackEl.style.color = '#f0ad4e';
                 currentPartQuestions[currentQuestionIndex].status = 'incorrect';
                 
-                // (ใหม่) เก็บข้อมูลข้อที่ผิด (กรณี_กดดูเฉลย)
-                saveIncorrectAnswer(q, correctAnswers, true);
+                logAnswer(q, currentTemplate, {}, correctAnswers, false, true);
 
                 submitButton.style.display = 'none';
                 hintButton.style.display = 'none';
@@ -817,189 +650,130 @@
                 updateCounters();
             }
         }
-        
-        // (ใหม่) Function แสดงคะแนนของพาส
-        function showPartScore() {
-            allQuestionsAnswered = true; // ตั้งค่าสถานะว่าจบพาสนี้แล้ว
-            showView('score'); // สลับไปหน้าสรุปคะแนน
-            
-            const totalInPart = currentPartQuestions.length;
-            partScoreDisplay.textContent = `คุณทำได้ ${score} / ${totalInPart} คะแนน`;
-            
-            // (ใหม่) ตรวจสอบว่ามีข้อผิดหรือไม่
-            reviewContainer.innerHTML = ''; // ล้างรีวิวเก่า (ถ้ามี)
-            reviewContainer.style.display = 'none'; // ซ่อนคอนเทนเนอร์รีวิว
-            
-            if (incorrectAnswersForReview.length > 0) {
-                reviewButton.style.display = 'inline-block'; // แสดงปุ่มรีวิว
-            } else {
-                reviewButton.style.display = 'none'; // ซ่อนปุ่มรีวิว (ถ้าถูกหมด)
+
+        function showAnswerInputFill(answers) {
+            const txt = answers.join(' / ');
+            if (currentTemplate === 0) { 
+                const el = document.getElementById('input-number');
+                if(el) { el.value = txt; el.disabled = true; }
+            } else if (currentTemplate === 1) { 
+                const el = document.getElementById('input-type');
+                if(el) { el.value = txt; el.disabled = true; }
+            } else if (currentTemplate === 2) { 
+                const el = document.getElementById('input-route');
+                if(el) { el.value = txt; el.disabled = true; }
             }
         }
+        
+        function showPartScore() {
+            showView('score');
+            partScoreDisplay.textContent = `คุณทำได้ ${score} / ${currentPartQuestions.length} คะแนน`;
+            
+            const wrongAnswers = answersLog.filter(log => !log.isCorrect);
+            if (wrongAnswers.length > 0) reviewButton.style.display = 'inline-block';
+            else reviewButton.style.display = 'none';
+            
+            reviewContainer.innerHTML = '';
+            reviewContainer.style.display = 'none';
+        }
 
-        // (แก้ไข) Function สำหรับปุ่ม ข้าม / ข้อถัดไป (ในพาส)
         function navigate() {
             let nextIndex = -1;
-            // 1. ค้นหาในพาสปัจจุบัน (จากข้อปัจจุบัน + 1 ไปจนจบพาส)
             for (let i = currentQuestionIndex + 1; i < currentPartQuestions.length; i++) {
-                if (currentPartQuestions[i].status === 'unanswered') {
-                    nextIndex = i;
-                    break;
-                }
+                if (currentPartQuestions[i].status === 'unanswered') { nextIndex = i; break; }
             }
-            // 2. ถ้าไม่เจอ ให้วนกลับมาค้นหาตั้งแต่ข้อ 0 (ในพาสนี้)
             if (nextIndex === -1) {
                 for (let i = 0; i < currentQuestionIndex; i++) {
-                    if (currentPartQuestions[i].status === 'unanswered') {
-                        nextIndex = i;
-                        break;
-                    }
+                    if (currentPartQuestions[i].status === 'unanswered') { nextIndex = i; break; }
                 }
             }
             
-            // 3. จัดการผลลัพธ์
             if (nextIndex !== -1) {
-                // เจอข้อที่ยังไม่ตอบ
                 currentQuestionIndex = nextIndex;
                 displayQuestion();
             } else {
-                // ไม่เจอข้อที่ยังไม่ตอบ
-                // ตรวจสอบว่าข้อปัจจุบัน (ข้อสุดท้ายที่เหลือ) ตอบหรือยัง
                 if (currentPartQuestions[currentQuestionIndex].status === 'unanswered') {
-                    if (answered) { // ถ้าตอบแล้ว (เช่น กดดูเฉลยข้อสุดท้าย)
-                        showPartScore();
-                    }
-                    // ถ้ายังไม่ตอบ ก็ไม่ต้องทำอะไร (รอผู้ใช้กด submit)
+                    // Waiting for user action
                 } else {
-                    // ตอบครบทุกข้อแล้ว
                     showPartScore();
                 }
             }
         }
         
-        // (ใหม่) Function สร้างหน้าเมนู
+        function startGame(start, end, partNum) {
+            showView('game');
+            const partData = allQuestionsShuffled.slice(start, end);
+            currentPartQuestions = [...partData];
+            currentPartQuestions.forEach(q => q.status = 'unanswered');
+            
+            currentQuestionIndex = 0;
+            score = 0;
+            answersLog = []; 
+            currentPartIndexForPrint = partNum;
+            
+            displayQuestion();
+        }
+
+        function exportToPDF() {
+            try {
+                const printContent = document.getElementById('print-content');
+                const printScore = document.getElementById('print-score');
+                const printTitle = document.getElementById('print-title');
+                
+                if (!printContent) { alert('ไม่พบส่วนแสดงผลสำหรับพิมพ์'); return; }
+                if (answersLog.length === 0) { alert('ไม่มีข้อมูลสำหรับการพิมพ์'); return; }
+
+                printTitle.textContent = `รายงานผลการทดสอบ - ชุดที่ ${currentPartIndexForPrint}`;
+                printScore.innerHTML = `คะแนนรวม: <b>${score} / ${currentPartQuestions.length}</b>`;
+                
+                let html = `<table class="report-table"><thead><tr><th style="width: 5%">ข้อ</th><th style="width: 40%">โจทย์</th><th style="width: 20%">คำตอบของคุณ</th><th style="width: 20%">เฉลย</th><th style="width: 15%">ผลลัพธ์</th></tr></thead><tbody>`;
+                answersLog.forEach(log => {
+                    html += `<tr><td>${log.no}</td><td>${log.question}</td><td>${log.userAnswer}</td><td>${log.correctAnswer}</td><td class="${log.isCorrect ? 'status-correct' : 'status-wrong'}">${log.isCorrect ? 'ถูกต้อง' : 'ผิด'}</td></tr>`;
+                });
+                html += `</tbody></table>`;
+                printContent.innerHTML = html;
+                
+                // Short delay to ensure rendering
+                setTimeout(() => { window.print(); }, 200);
+            } catch(e) {
+                console.error(e);
+                alert("เกิดข้อผิดพลาดในการพิมพ์: " + e.message);
+            }
+        }
+
+        function showReview() {
+            const wrongAnswers = answersLog.filter(log => !log.isCorrect);
+            reviewContainer.innerHTML = '<h3>ข้อที่ตอบผิด</h3>';
+            reviewContainer.style.display = 'block';
+            reviewButton.style.display = 'none';
+
+            wrongAnswers.forEach(item => {
+                reviewContainer.innerHTML += `<div class="review-item"><h4>ข้อ ${item.no}: ${item.question}</h4><p><b>ตอบ:</b> <span class="review-wrong">${item.userAnswer}</span> | <b>เฉลย:</b> <span class="review-correct">${item.correctAnswer}</span></p></div>`;
+            });
+        }
+
         function createMenu() {
-            partSelectionContainer.innerHTML = ''; // เคลียร์ปุ่มเก่า (ถ้ามี)
-            const totalParts = Math.ceil(allQuestionsShuffled.length / QUESTIONS_PER_PART); // = 7
+            partSelectionContainer = document.getElementById('part-selection-container');
+            partSelectionContainer.innerHTML = '';
+            const totalParts = Math.ceil(allQuestionsShuffled.length / QUESTIONS_PER_PART);
 
             for (let i = 0; i < totalParts; i++) {
                 const start = i * QUESTIONS_PER_PART;
-                // ใช้ allQuestionsShuffled แทน trainData
                 const end = (i === totalParts - 1) ? allQuestionsShuffled.length : (i + 1) * QUESTIONS_PER_PART;
                 const count = end - start;
                 
                 const button = document.createElement('button');
-                button.className = 'action-btn part-button'; // ใช้สไตล์เดียวกัน
+                button.className = 'action-btn part-button';
                 button.textContent = `ชุดที่ ${i + 1} (ข้อ ${start + 1} - ${end}) - ${count} ข้อ`;
-                
-                // (แก้ไข) ส่ง start และ end ไปให้ startGame
-                button.onclick = () => startGame(start, end); 
-                
+                button.onclick = () => startGame(start, end, i + 1);
                 partSelectionContainer.appendChild(button);
             }
         }
-        
-        // (ใหม่) Function เริ่มเกม (รับ start/end)
-        function startGame(start, end) {
-            showView('game'); // สลับไปหน้าเกม
-            
-            // 1. ตัดข้อมูลเฉพาะพาสนี้ (จากข้อมูลที่สลับแล้ว)
-            const partData = allQuestionsShuffled.slice(start, end);
-            
-            // 2. เตรียมข้อมูล (ไม่ต้องสลับซ้ำก็ได้ เพราะสลับมาแล้ว แต่สลับอีกทีในพาสก็ดี)
-            currentPartQuestions = [...partData];
-            // shuffleArray(currentPartQuestions); // ไม่ต้องสลับในพาสอีกก็ได้ ถ้าอยากให้ลำดับคงที่ตามที่สุ่มมาตอนแรก
-            // หรือจะสลับอีกทีเพื่อให้ภายในพาสสุ่มใหม่ทุกครั้งที่เข้าก็ได้
-            // แต่เพื่อความง่าย ให้คงลำดับไว้ตาม Global Shuffle
-            currentPartQuestions.forEach(q => q.status = 'unanswered');
-            
-            // 3. รีเซ็ตค่าสำหรับพาสนี้
-            currentQuestionIndex = 0;
-            score = 0;
-            allQuestionsAnswered = false;
-            incorrectAnswersForReview = []; // (ใหม่) ล้างรายการข้อผิดของพาสเก่า
-            reviewButton.style.display = 'none'; // (ใหม่) ซ่อนปุ่มรีวิว
-            reviewContainer.style.display = 'none'; // (ใหม่) ซ่อนรีวิวเก่า
-            
-            // 4. แสดงคำถามข้อแรก
-            displayQuestion();
-        }
 
-        // (ใหม่) Function สร้างข้อความโจทย์สำหรับรีวิว
-        function getQuestionLinesForReview(item) {
-            let lines = '';
-            const q = item.questionData;
-            switch (item.template) {
-                case 0: // ตอบ Number
-                    lines = createQuestionLine('เส้นทาง', q.route) + createQuestionLine('ประเภท', q.type);
-                    break;
-                case 1: // ตอบ Type
-                    lines = createQuestionLine('หมายเลข', q.number) + createQuestionLine('เส้นทาง', q.route);
-                    break;
-                case 2: // ตอบ Route
-                    lines = createQuestionLine('หมายเลข', q.number) + createQuestionLine('ประเภท', q.type);
-                    break;
-            }
-            // (แก้ไข) ต้องลบ <span> ออกจาก HTML ที่สร้าง
-            return lines.replace(/<span[^>]*>/g, ' ').replace(/<\/span>/g, '');
-        }
-
-        // (ใหม่) Function เก็บข้อมูลข้อที่ผิด
-        function saveIncorrectAnswer(q, correctAnswers, userSkipped = false) {
-            let userAnswers = [];
-            
-            if (userSkipped) {
-                userAnswers.push("(กดดูเฉลย)");
-            } else {
-                // ดึงคำตอบที่ผู้ใช้พิมพ์
-                if (currentTemplate === 0) {
-                    userAnswers.push(document.getElementById('input-number').value || "(ว่าง)");
-                } else if (currentTemplate === 1) {
-                    userAnswers.push(document.getElementById('input-type').value || "(ว่าง)");
-                } else if (currentTemplate === 2) {
-                    userAnswers.push(document.getElementById('input-route').value || "(ว่าง)");
-                }
-            }
-
-            incorrectAnswersForReview.push({
-                questionData: q,
-                template: currentTemplate,
-                userAnswers: userAnswers,
-                correctAnswers: correctAnswers
-            });
-        }
-        
-        // (ใหม่) Function แสดงรีวิวข้อที่ผิด
-        function showReview() {
-            reviewContainer.innerHTML = '<h3>ข้อที่ตอบผิด</h3>';
-            reviewContainer.style.display = 'block';
-            reviewButton.style.display = 'none'; // ซ่อนปุ่มหลังจากคลิก
-
-            incorrectAnswersForReview.forEach(item => {
-                const questionHtml = getQuestionLinesForReview(item).replace(/<\/div>/g, '</div><br>'); // เพิ่ม <br>
-                const userAns = item.userAnswers.join(', ');
-                const correctAns = item.correctAnswers.join(' / ');
-
-                const reviewHtml = `
-                    <div class="review-item">
-                        <h4>โจทย์:</h4>
-                        <div class="review-question">${questionHtml}</div>
-                        <div class="review-answer">
-                            <p><b>คำตอบของคุณ:</b> <span class="review-wrong">${userAns}</span></p>
-                            <p><b>คำตอบที่ถูก:</b> <span class="review-correct">${correctAns}</span></p>
-                        </div>
-                    </div>
-                `;
-                reviewContainer.innerHTML += reviewHtml;
-            });
-        }
-
-        // (ใหม่) Function ที่จะเริ่มทุกอย่าง
         function initializeApp() {
             if (appInitialized) return; 
             appInitialized = true; 
             
-            // **กำหนดค่า** Element 
             menuContainer = document.getElementById('menu-container');
             gameContainer = document.getElementById('game-container');
             partScoreContainer = document.getElementById('part-score-container');
@@ -1008,6 +782,7 @@
             backToMenuButton = document.getElementById('back-to-menu-button');
             reviewButton = document.getElementById('review-button');
             reviewContainer = document.getElementById('review-container');
+            exportPdfButton = document.getElementById('export-pdf-button');
         
             questionContainer = document.getElementById('question-container');
             answerContainer = document.getElementById('answer-container');
@@ -1017,38 +792,28 @@
             hintButton = document.getElementById('hint-button');
             navButton = document.getElementById('navigation-button');
 
-            if (!menuContainer || !gameContainer || !partScoreContainer) {
-                console.error('Critical view elements not found!');
-                return;
-            }
+            if (!menuContainer) return;
 
-            // ตั้งค่า listener
             submitButton.onclick = checkAnswer;
-            hintButton.onclick = () => showAnswer(false, []);
+            hintButton.onclick = () => showAnswer(false);
             navButton.onclick = navigate;
             backToMenuButton.onclick = () => showView('menu');
             reviewButton.onclick = showReview;
+            exportPdfButton.onclick = exportToPDF;
             
             answerContainer.addEventListener('keyup', function(event) {
-                if (event.key === 'Enter' && !answered) {
-                    if (event.target && event.target.classList.contains('answer-input')) {
-                        checkAnswer();
-                    }
-                }
+                if (event.key === 'Enter' && !answered && event.target.classList.contains('answer-input')) checkAnswer();
             });
             
-            // (ใหม่) สลับข้อมูลทั้งหมดก่อนสร้างเมนู
             allQuestionsShuffled = [...trainData];
             shuffleArray(allQuestionsShuffled);
             
-            // เริ่มต้น
             createMenu();
             showView('menu');
         }
 
-        // (แก้ไข) ตั้งค่าทุกอย่างหลังจาก DOM โหลดเสร็จ
         document.addEventListener('DOMContentLoaded', initializeApp);
-        window.onload = initializeApp; // Fallback
+        window.onload = initializeApp;
     </script>
 </body>
 </html>
