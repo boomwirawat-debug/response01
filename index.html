@@ -98,6 +98,58 @@
              background-color: #5a6268;
         }
 
+        /* (ใหม่) สไตล์สำหรับปุ่มรีวิว */
+        #review-button {
+            background-color: #f0ad4e; /* สีส้ม */
+            margin-top: 10px; /* เว้นระยะจากปุ่มกลับ */
+            display: none; /* ซ่อนไว้ก่อน */
+        }
+        #review-button:hover {
+            background-color: #ec971f;
+        }
+
+        /* (ใหม่) สไตล์สำหรับส่วนรีวิว */
+        #review-container {
+            margin-top: 20px;
+            text-align: left;
+            border-top: 2px solid #eee;
+            padding-top: 15px;
+            display: none; /* ซ่อนไว้ก่อน */
+        }
+        .review-item {
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .review-item h4 {
+            margin: 0 0 5px 0;
+            color: #333;
+        }
+        .review-question {
+            font-style: italic;
+            color: #555;
+            font-size: 0.95rem;
+            padding-left: 10px;
+        }
+        .review-answer p {
+            margin: 5px 0 5px 10px;
+            font-size: 1rem;
+        }
+        .review-wrong {
+            color: #dc3545;
+            font-weight: bold;
+            background-color: #fff0f0;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+        .review-correct {
+            color: #28a745;
+            font-weight: bold;
+            background-color: #f0fff4;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+
 
         /* --- สไตล์อื่นๆ (เหมือนเดิม) --- */
         h1 {
@@ -225,59 +277,6 @@
         #navigation-button { background-color: #6c757d; }
         #navigation-button:hover { background-color: #5a6268; }
 
-        /* (ใหม่) สไตล์สำหรับปุ่มรีวิว */
-        #review-button {
-            background-color: #f0ad4e; /* สีส้ม */
-            margin-top: 10px; /* เว้นระยะจากปุ่มกลับ */
-            display: none; /* ซ่อนไว้ก่อน */
-        }
-        #review-button:hover {
-            background-color: #ec971f;
-        }
-
-        /* (ใหม่) สไตล์สำหรับส่วนรีวิว */
-        #review-container {
-            margin-top: 20px;
-            text-align: left;
-            border-top: 2px solid #eee;
-            padding-top: 15px;
-            display: none; /* ซ่อนไว้ก่อน */
-        }
-        .review-item {
-            border-bottom: 1px solid #f0f0f0;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-        }
-        .review-item h4 {
-            margin: 0 0 5px 0;
-            color: #333;
-        }
-        .review-question {
-            font-style: italic;
-            color: #555;
-            font-size: 0.95rem;
-            padding-left: 10px;
-        }
-        .review-answer p {
-            margin: 5px 0 5px 10px;
-            font-size: 1rem;
-        }
-        .review-wrong {
-            color: #dc3545;
-            font-weight: bold;
-            background-color: #fff0f0;
-            padding: 2px 5px;
-            border-radius: 4px;
-        }
-        .review-correct {
-            color: #28a745;
-            font-weight: bold;
-            background-color: #f0fff4;
-            padding: 2px 5px;
-            border-radius: 4px;
-        }
-
-
         @media (max-width: 480px) {
             h1, #part-score-container h2 { font-size: 1.6rem; }
             .question-line { font-size: 1rem; }
@@ -299,7 +298,8 @@
 
         <!-- (ใหม่) หน้าเมนู -->
         <div id="menu-container">
-            <h1>เลือกพาสที่ต้องการทดสอบ</h1>
+            <h1>เลือกชุดข้อสอบ</h1>
+            <p style="color: #666; margin-bottom: 20px;">(ข้อสอบถูกคละสายรถไฟในทุกชุด)</p>
             <div id="part-selection-container">
                 <!-- ปุ่มเลือกพาสจะถูกสร้างโดย JS -->
             </div>
@@ -321,7 +321,7 @@
         
         <!-- (ใหม่) หน้าสรุปคะแนน -->
         <div id="part-score-container">
-            <h2>สรุปคะแนน (พาสนี้)</h2>
+            <h2>สรุปคะแนน (ชุดนี้)</h2>
             <div id="part-score-display">คุณทำได้ 0 / 0 คะแนน</div>
             <button id="back-to-menu-button" class="action-btn">กลับไปหน้าหลัก</button>
             
@@ -393,14 +393,14 @@
             { route: "ปาดังเบซาร์ - ชุมทางหาดใหญ่", number: "948", type: "พิเศษโดยสาร" },
             { route: "ชุมทางหาดใหญ่ - ปาดังเบซาร์", number: "949", type: "พิเศษโดยสาร" },
             { route: "ปาดังเบซาร์ - ชุมทางหาดใหญ่", number: "950", type: "พิเศษโดยสาร" },
-            { route: "ธนบุรี - นครปฐม", number: "1115", type: "เชื่อมต่อสายสีแดง" },
-            { route: "นครปฐม - ธนบุรี", number: "1116", type: "เชื่อมต่อสายสีแดง" },
-            { route: "ธนบุรี - นครปฐม", number: "1117", type: "เชื่อมต่อสายสีแดง" },
-            { route: "นครปฐม - ธนบุรี", number: "1118", type: "เชื่อมต่อสายสีแดง" },
-            { route: "ธนบุรี - นครปฐม", number: "1123", type: "เชื่อมต่อสายสีแดง" },
-            { route: "นครปฐม - ธนบุรี", number: "1124", type: "เชื่อมต่อสายสีแดง" },
-            { route: "ธนบุรี - นครปฐม", number: "1129", type: "เชื่อมต่อสายสีแดง" },
-            { route: "นครปฐม - ธนบุรี", number: "1132", type: "เชื่อมต่อสายสีแดง" },
+            { route: "ธนบุรี - นครปฐม", number: "1115", type: "พิเศษชานเมือง" },
+            { route: "นครปฐม - ธนบุรี", number: "1116", type: "พิเศษชานเมือง" },
+            { route: "ธนบุรี - นครปฐม", number: "1117", type: "พิเศษชานเมือง" },
+            { route: "นครปฐม - ธนบุรี", number: "1118", type: "พิเศษชานเมือง" },
+            { route: "ธนบุรี - นครปฐม", number: "1123", type: "พิเศษชานเมือง" },
+            { route: "นครปฐม - ธนบุรี", number: "1124", type: "พิเศษชานเมือง" },
+            { route: "ธนบุรี - นครปฐม", number: "1129", type: "พิเศษชานเมือง" },
+            { route: "นครปฐม - ธนบุรี", number: "1132", type: "พิเศษชานเมือง" },
             { route: "กรุงเทพอภิวัฒน์ - เชียงใหม่", number: "7", type: "ด่วนพิเศษ" },
             { route: "เชียงใหม่ - กรุงเทพอภิวัฒน์", number: "8", type: "ด่วนพิเศษ" },
             { route: "กรุงเทพอภิวัฒน์ - เชียงใหม่", number: "9 CNR", type: "ด่วนพิเศษ" },
@@ -408,7 +408,7 @@
             { route: "กรุงเทพอภิวัฒน์ - เชียงใหม่", number: "13", type: "ด่วนพิเศษ" },
             { route: "เชียงใหม่ - กรุงเทพอภิวัฒน์", number: "14", type: "ด่วนพิเศษ" },
             { route: "กรุงเทพอภิวัฒน์ - เชียงใหม่", number: "51", type: "ด่วน" },
-            { route: "เชียงใหม่ - กรุงเทพอภิวัฒน์", number: "52", type: "เร็ว" },
+            { route: "เชียงใหม่ - กรุงเทพอภิวัฒน์", number: "52", type: "ด่วน" },
             { route: "เชียงใหม่ - กรุงเทพอภิวัฒน์", number: "102", type: "เร็ว" },
             { route: "กรุงเทพอภิวัฒน์ - เด่นชัย", number: "107", type: "เร็ว" },
             { route: "เด่นชัย - กรุงเทพอภิวัฒน์", number: "108", type: "เร็ว" },
@@ -558,6 +558,7 @@
 
         // (ใหม่) ตัวแปรสำหรับเก็บคำถามเฉพาะพาสนี้
         let currentPartQuestions = [];
+        let allQuestionsShuffled = []; // (ใหม่) เก็บข้อมูลทั้งหมดที่สลับแล้ว
         
         let currentQuestionIndex = 0;
         let currentTemplate = 0; // 0:FindNum, 1:FindType, 2:FindRoute
@@ -673,7 +674,7 @@
                     if (event.key === 'Enter' && !answered) {
                         checkAnswer();
                     }
-                }; // <-- **** แก้ไข: เติม } ที่หายไป ****
+                }; 
             });
         }
         
@@ -879,16 +880,17 @@
         // (ใหม่) Function สร้างหน้าเมนู
         function createMenu() {
             partSelectionContainer.innerHTML = ''; // เคลียร์ปุ่มเก่า (ถ้ามี)
-            const totalParts = Math.ceil(trainData.length / QUESTIONS_PER_PART); // = 7
+            const totalParts = Math.ceil(allQuestionsShuffled.length / QUESTIONS_PER_PART); // = 7
 
             for (let i = 0; i < totalParts; i++) {
                 const start = i * QUESTIONS_PER_PART;
-                const end = (i === totalParts - 1) ? trainData.length : (i + 1) * QUESTIONS_PER_PART;
+                // ใช้ allQuestionsShuffled แทน trainData
+                const end = (i === totalParts - 1) ? allQuestionsShuffled.length : (i + 1) * QUESTIONS_PER_PART;
                 const count = end - start;
                 
                 const button = document.createElement('button');
                 button.className = 'action-btn part-button'; // ใช้สไตล์เดียวกัน
-                button.textContent = `พาส ${i + 1} (ข้อ ${start + 1} - ${end}) - ${count} ข้อ`;
+                button.textContent = `ชุดที่ ${i + 1} (ข้อ ${start + 1} - ${end}) - ${count} ข้อ`;
                 
                 // (แก้ไข) ส่ง start และ end ไปให้ startGame
                 button.onclick = () => startGame(start, end); 
@@ -901,12 +903,14 @@
         function startGame(start, end) {
             showView('game'); // สลับไปหน้าเกม
             
-            // 1. ตัดข้อมูลเฉพาะพาสนี้
-            const partData = trainData.slice(start, end);
+            // 1. ตัดข้อมูลเฉพาะพาสนี้ (จากข้อมูลที่สลับแล้ว)
+            const partData = allQuestionsShuffled.slice(start, end);
             
-            // 2. สับเปลี่ยนและเตรียมข้อมูล
+            // 2. เตรียมข้อมูล (ไม่ต้องสลับซ้ำก็ได้ เพราะสลับมาแล้ว แต่สลับอีกทีในพาสก็ดี)
             currentPartQuestions = [...partData];
-            shuffleArray(currentPartQuestions);
+            // shuffleArray(currentPartQuestions); // ไม่ต้องสลับในพาสอีกก็ได้ ถ้าอยากให้ลำดับคงที่ตามที่สุ่มมาตอนแรก
+            // หรือจะสลับอีกทีเพื่อให้ภายในพาสสุ่มใหม่ทุกครั้งที่เข้าก็ได้
+            // แต่เพื่อความง่าย ให้คงลำดับไว้ตาม Global Shuffle
             currentPartQuestions.forEach(q => q.status = 'unanswered');
             
             // 3. รีเซ็ตค่าสำหรับพาสนี้
@@ -1032,6 +1036,10 @@
                     }
                 }
             });
+            
+            // (ใหม่) สลับข้อมูลทั้งหมดก่อนสร้างเมนู
+            allQuestionsShuffled = [...trainData];
+            shuffleArray(allQuestionsShuffled);
             
             // เริ่มต้น
             createMenu();
