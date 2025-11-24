@@ -153,7 +153,7 @@
         
         #back-to-menu-button { background-color: #6c757d; width: 100%; margin-bottom: 10px;}
         #review-button { background-color: #17a2b8; width: 100%; margin-bottom: 10px; display: none;}
-        #export-pdf-button { background-color: #28a745; width: 100%; margin-bottom: 10px;}
+        #export-pdf-button { background-color: #28a745; width: 100%; margin-bottom: 10px;} /* ปุ่ม PDF สีเขียว */
 
         /* --- ส่วนรีวิว --- */
         #review-container {
@@ -171,14 +171,15 @@
         .review-wrong { color: #dc3545; font-weight: bold; }
         .review-correct { color: #28a745; font-weight: bold; }
 
-        /* --- ส่วนสำหรับพิมพ์ (Print Area) --- */
+        /* --- (ใหม่) ส่วนสำหรับพิมพ์ (Print Area) --- */
         #print-container {
-            display: none;
+            display: none; /* ซ่อนในหน้าจอปกติ */
             font-family: 'Sarabun', sans-serif;
             padding: 20px;
             background: white;
         }
         
+        /* Table สำหรับรายงาน */
         .report-table {
             width: 100%;
             border-collapse: collapse;
@@ -197,10 +198,11 @@
         .status-correct { color: green; font-weight: bold; }
         .status-wrong { color: red; font-weight: bold; }
 
+        /* --- Media Query สำหรับการพิมพ์ --- */
         @media print {
             body { background-color: white; display: block; padding: 0; }
-            #app-container { display: none !important; }
-            #print-container { display: block !important; }
+            #app-container { display: none !important; } /* ซ่อนแอปปกติ */
+            #print-container { display: block !important; } /* แสดงส่วนรายงาน */
             @page { margin: 2cm; }
         }
 
@@ -213,13 +215,16 @@
 </head>
 <body>
 
+    <!-- คอนเทนเนอร์หลักของแอป -->
     <div id="app-container">
+        <!-- หน้าเมนู -->
         <div id="menu-container">
             <h1>เลือกชุดข้อสอบ</h1>
             <p style="color: #666; margin-bottom: 20px;">(ขอให้ทุกท่านโชคดีกับการทำข้อสอบครับ)</p>
             <div id="part-selection-container"></div>
         </div>
 
+        <!-- หน้าเกม -->
         <div id="game-container">
             <h1>เกมทดสอบขบวนรถไฟ</h1>
             <div id="score-counter">กำลังโหลด...</div>
@@ -233,12 +238,14 @@
             </div>
         </div>
         
+        <!-- หน้าสรุปคะแนน -->
         <div id="part-score-container">
             <h2>สรุปคะแนน (ชุดนี้)</h2>
             <div id="part-score-display" style="font-size: 1.5rem; font-weight: bold; color: #28a745; margin-bottom: 20px;">
                 คุณทำได้ 0 / 0 คะแนน
             </div>
             
+            <!-- ปุ่มต่างๆ -->
             <button id="export-pdf-button" class="action-btn">บันทึกเป็น PDF (พิมพ์รายงาน)</button>
             <button id="review-button" class="action-btn">ดูข้อที่ผิดในหน้าจอนี้</button>
             <button id="back-to-menu-button" class="action-btn">กลับไปหน้าหลัก</button>
@@ -247,6 +254,7 @@
         </div>
     </div> 
 
+    <!-- (ใหม่) ส่วนสำหรับพิมพ์รายงาน (จะแสดงเฉพาะตอนสั่งพิมพ์) -->
     <div id="print-container">
         <h2 id="print-title" style="text-align: center;">รายงานผลการทดสอบ</h2>
         <p id="print-score" style="text-align: center; font-size: 1.2rem;"></p>
@@ -254,8 +262,9 @@
         <p style="text-align: center; margin-top: 30px; font-size: 0.8rem; color: #555;">สร้างโดย: เกมทดสอบขบวนรถไฟ</p>
     </div>
 
+    <!-- --- JavaScript --- -->
     <script>
-        // --- ข้อมูลรถไฟ 177 ข้อ ---
+        // --- ข้อมูลรถไฟทั้งหมด ---
         const trainData = [
             { route: "กรุงเทพอภิวัฒน์ - ชุมทางหาดใหญ่", number: "31 CNR", type: "ด่วนพิเศษ" },
             { route: "ชุมทางหาดใหญ่ - กรุงเทพอภิวัฒน์", number: "32 CNR", type: "ด่วนพิเศษ" },
@@ -470,7 +479,7 @@
         ];
 
         // --- ตรรกะของเกม ---
-        const QUESTIONS_PER_PART = 20;
+        const QUESTIONS_PER_PART = 25;
         let currentPartQuestions = [];
         let allQuestionsShuffled = [];
         let currentQuestionIndex = 0;
@@ -480,7 +489,7 @@
         let answersLog = [];
         let currentPartIndexForPrint = 0; 
 
-        // Element Reference
+        // Element Reference (ประกาศตัวแปร)
         let menuContainer, gameContainer, partScoreContainer, partSelectionContainer,
             partScoreDisplay, backToMenuButton, reviewButton, reviewContainer,
             questionContainer, answerContainer, feedbackEl, scoreCounterEl,
@@ -488,6 +497,7 @@
             
         let appInitialized = false; 
 
+        // Function สลับหน้าจอ
         function showView(viewName) {
             if (!menuContainer) return;
             menuContainer.style.display = 'none';
@@ -499,6 +509,7 @@
             else if (viewName === 'score') partScoreContainer.style.display = 'block';
         }
 
+        // Utility Functions
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -510,12 +521,14 @@
         function createInput(id, label) { return `<div class="answer-group"><label for="input-${id}">${label}:</label><input type="text" id="input-${id}" class="answer-input" placeholder="เติมคำตอบ..."></div>`; }
         function createQuestionLine(label, value) { return `<div class="question-line">${label}: <span>${value}</span></div>`; }
 
+        // อัปเดต UI
         function updateCounters() {
             const remaining = currentPartQuestions.filter(q => q.status === 'unanswered').length;
             const totalInPart = currentPartQuestions.length;
             scoreCounterEl.textContent = `ข้อที่: ${currentQuestionIndex + 1}/${totalInPart} | คะแนน: ${score} | เหลือ: ${remaining}`;
         }
 
+        // แสดงคำถาม
         function displayQuestion() {
             answered = false;
             currentTemplate = Math.floor(Math.random() * 3); 
@@ -542,15 +555,18 @@
             });
         }
         
+        // (ใหม่) ฟังก์ชันบันทึกคำตอบลง Log
         function logAnswer(q, template, userAnsObj, correctAnsArr, isCorrect, isSkipped) {
             let questionText = "";
             let correctText = correctAnsArr.join(" / ");
             let userText = "";
 
+            // สร้างข้อความโจทย์
             if (template === 0) questionText = `เส้นทาง: ${q.route}, ประเภท: ${q.type}`;
             else if (template === 1) questionText = `หมายเลข: ${q.number}, เส้นทาง: ${q.route}`;
             else if (template === 2) questionText = `หมายเลข: ${q.number}, ประเภท: ${q.type}`;
 
+            // ดึงคำตอบผู้ใช้
             if (isSkipped) userText = "(ดูเฉลย)";
             else {
                 if (template === 0) userText = userAnsObj.number;
@@ -568,6 +584,7 @@
             });
         }
 
+        // ตรวจคำตอบ
         function checkAnswer() {
             if (answered) return;
             const q = currentPartQuestions[currentQuestionIndex];
@@ -608,6 +625,7 @@
             hintButton.style.display = 'none';
             navButton.textContent = 'ข้อถัดไป';
 
+            // (ใหม่) บันทึกผล
             logAnswer(q, currentTemplate, userAnswers, correctAnswersForHint, isFullyCorrect, false);
 
             if (isFullyCorrect) {
@@ -617,11 +635,12 @@
             } else {
                 feedbackEl.textContent = `ผิด! คำตอบคือ: ${correctAnswersForHint.join(' / ')}`; feedbackEl.style.color = '#dc3545';
                 currentPartQuestions[currentQuestionIndex].status = 'incorrect';
-                showAnswerInputFill(correctAnswersForHint);
+                // showAnswerInputFill(correctAnswersForHint); // <--- REMOVED THIS LINE
             }
             updateCounters();
         }
         
+        // ดูเฉลย (กดปุ่ม)
         function showAnswer(onlyIncorrect = false, correctAnswers = []) {
             if (answered && !onlyIncorrect) return;
             const q = currentPartQuestions[currentQuestionIndex];
@@ -634,14 +653,15 @@
                  else if (currentTemplate === 2) correctAnswers = [q.route];
             }
             
-            showAnswerInputFill(correctAnswers);
+            showAnswerInputFill(correctAnswers); // เติมช่อง
             
-            if (!onlyIncorrect) { 
+            if (!onlyIncorrect) { // กดดูเฉลยเอง
                 answered = true;
                 feedbackEl.textContent = `เฉลยคือ: ${correctAnswers.join(' / ')}`;
                 feedbackEl.style.color = '#f0ad4e';
                 currentPartQuestions[currentQuestionIndex].status = 'incorrect';
                 
+                // (ใหม่) บันทึกผลว่าดูเฉลย
                 logAnswer(q, currentTemplate, {}, correctAnswers, false, true);
 
                 submitButton.style.display = 'none';
@@ -665,10 +685,12 @@
             }
         }
         
+        // จบพาส
         function showPartScore() {
             showView('score');
             partScoreDisplay.textContent = `คุณทำได้ ${score} / ${currentPartQuestions.length} คะแนน`;
             
+            // เช็คปุ่มรีวิว (กรองเฉพาะข้อผิดจาก Log)
             const wrongAnswers = answersLog.filter(log => !log.isCorrect);
             if (wrongAnswers.length > 0) reviewButton.style.display = 'inline-block';
             else reviewButton.style.display = 'none';
@@ -677,6 +699,7 @@
             reviewContainer.style.display = 'none';
         }
 
+        // ปุ่มนำทาง
         function navigate() {
             let nextIndex = -1;
             for (let i = currentQuestionIndex + 1; i < currentPartQuestions.length; i++) {
@@ -693,13 +716,14 @@
                 displayQuestion();
             } else {
                 if (currentPartQuestions[currentQuestionIndex].status === 'unanswered') {
-                    // Waiting for user action
+                    // รอ
                 } else {
                     showPartScore();
                 }
             }
         }
         
+        // เริ่มเกม
         function startGame(start, end, partNum) {
             showView('game');
             const partData = allQuestionsShuffled.slice(start, end);
@@ -708,39 +732,53 @@
             
             currentQuestionIndex = 0;
             score = 0;
-            answersLog = []; 
-            currentPartIndexForPrint = partNum;
+            answersLog = []; // รีเซ็ต Log
+            currentPartIndexForPrint = partNum; // จำชุดที่
             
             displayQuestion();
         }
 
+        // (ใหม่) ฟังก์ชัน Export PDF (Print)
         function exportToPDF() {
-            try {
-                const printContent = document.getElementById('print-content');
-                const printScore = document.getElementById('print-score');
-                const printTitle = document.getElementById('print-title');
-                
-                if (!printContent) { alert('ไม่พบส่วนแสดงผลสำหรับพิมพ์'); return; }
-                if (answersLog.length === 0) { alert('ไม่มีข้อมูลสำหรับการพิมพ์'); return; }
-
-                printTitle.textContent = `รายงานผลการทดสอบ - ชุดที่ ${currentPartIndexForPrint}`;
-                printScore.innerHTML = `คะแนนรวม: <b>${score} / ${currentPartQuestions.length}</b>`;
-                
-                let html = `<table class="report-table"><thead><tr><th style="width: 5%">ข้อ</th><th style="width: 40%">โจทย์</th><th style="width: 20%">คำตอบของคุณ</th><th style="width: 20%">เฉลย</th><th style="width: 15%">ผลลัพธ์</th></tr></thead><tbody>`;
-                answersLog.forEach(log => {
-                    html += `<tr><td>${log.no}</td><td>${log.question}</td><td>${log.userAnswer}</td><td>${log.correctAnswer}</td><td class="${log.isCorrect ? 'status-correct' : 'status-wrong'}">${log.isCorrect ? 'ถูกต้อง' : 'ผิด'}</td></tr>`;
-                });
-                html += `</tbody></table>`;
-                printContent.innerHTML = html;
-                
-                // Short delay to ensure rendering
-                setTimeout(() => { window.print(); }, 200);
-            } catch(e) {
-                console.error(e);
-                alert("เกิดข้อผิดพลาดในการพิมพ์: " + e.message);
-            }
+            const printContent = document.getElementById('print-content');
+            const printScore = document.getElementById('print-score');
+            const printTitle = document.getElementById('print-title');
+            
+            printTitle.textContent = `รายงานผลการทดสอบ - ชุดที่ ${currentPartIndexForPrint}`;
+            printScore.innerHTML = `คะแนนรวม: <b>${score} / ${currentPartQuestions.length}</b>`;
+            
+            let html = `<table class="report-table">
+                <thead>
+                    <tr>
+                        <th style="width: 5%">ข้อ</th>
+                        <th style="width: 40%">โจทย์</th>
+                        <th style="width: 20%">คำตอบของคุณ</th>
+                        <th style="width: 20%">เฉลย</th>
+                        <th style="width: 15%">ผลลัพธ์</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+            
+            answersLog.forEach(log => {
+                html += `<tr>
+                    <td>${log.no}</td>
+                    <td>${log.question}</td>
+                    <td>${log.userAnswer}</td>
+                    <td>${log.correctAnswer}</td>
+                    <td class="${log.isCorrect ? 'status-correct' : 'status-wrong'}">
+                        ${log.isCorrect ? 'ถูกต้อง' : 'ผิด'}
+                    </td>
+                </tr>`;
+            });
+            
+            html += `</tbody></table>`;
+            printContent.innerHTML = html;
+            
+            // สั่งพิมพ์
+            window.print();
         }
 
+        // แสดงรีวิว (เฉพาะข้อผิด)
         function showReview() {
             const wrongAnswers = answersLog.filter(log => !log.isCorrect);
             reviewContainer.innerHTML = '<h3>ข้อที่ตอบผิด</h3>';
@@ -748,10 +786,16 @@
             reviewButton.style.display = 'none';
 
             wrongAnswers.forEach(item => {
-                reviewContainer.innerHTML += `<div class="review-item"><h4>ข้อ ${item.no}: ${item.question}</h4><p><b>ตอบ:</b> <span class="review-wrong">${item.userAnswer}</span> | <b>เฉลย:</b> <span class="review-correct">${item.correctAnswer}</span></p></div>`;
+                reviewContainer.innerHTML += `
+                    <div class="review-item">
+                        <h4>ข้อ ${item.no}: ${item.question}</h4>
+                        <p><b>ตอบ:</b> <span class="review-wrong">${item.userAnswer}</span> | <b>เฉลย:</b> <span class="review-correct">${item.correctAnswer}</span></p>
+                    </div>
+                `;
             });
         }
 
+        // สร้างเมนู
         function createMenu() {
             partSelectionContainer = document.getElementById('part-selection-container');
             partSelectionContainer.innerHTML = '';
@@ -770,6 +814,7 @@
             }
         }
 
+        // Init
         function initializeApp() {
             if (appInitialized) return; 
             appInitialized = true; 
@@ -782,7 +827,7 @@
             backToMenuButton = document.getElementById('back-to-menu-button');
             reviewButton = document.getElementById('review-button');
             reviewContainer = document.getElementById('review-container');
-            exportPdfButton = document.getElementById('export-pdf-button');
+            exportPdfButton = document.getElementById('export-pdf-button'); // ปุ่มใหม่
         
             questionContainer = document.getElementById('question-container');
             answerContainer = document.getElementById('answer-container');
@@ -799,7 +844,7 @@
             navButton.onclick = navigate;
             backToMenuButton.onclick = () => showView('menu');
             reviewButton.onclick = showReview;
-            exportPdfButton.onclick = exportToPDF;
+            exportPdfButton.onclick = exportToPDF; // ผูกฟังก์ชัน
             
             answerContainer.addEventListener('keyup', function(event) {
                 if (event.key === 'Enter' && !answered && event.target.classList.contains('answer-input')) checkAnswer();
